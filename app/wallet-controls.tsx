@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   useConnect,
   useConnectedWallet,
@@ -22,8 +22,14 @@ export function WalletControls() {
   const connected = useConnectedWallet(client);
   const connect = useConnect(client);
   const disconnect = useDisconnect(client);
+  const [hydrated, setHydrated] = useState(false);
   const [open, setOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // The server wallet store is pending; keep the first client render identical
+  // so hydration cannot leave its disabled attribute on a disconnected wallet.
+  useEffect(() => setHydrated(true), []);
+  const isConnecting = hydrated && status === "connecting";
 
   async function handleConnect(wallet: (typeof wallets)[number]) {
     setError(null);
@@ -46,7 +52,7 @@ export function WalletControls() {
 
   return (
     <div className="wallet-control">
-      {connected ? (
+      {hydrated && connected ? (
         <button className="wallet-button connected-wallet" type="button" onClick={handleDisconnect} aria-label="Disconnect wallet">
           {shortAddress(connected.account.address)} <span>DISCONNECT</span>
         </button>
@@ -55,11 +61,11 @@ export function WalletControls() {
           className="wallet-button"
           type="button"
           onClick={() => setOpen((value) => !value)}
-          disabled={status === "connecting" || status === "pending"}
+          disabled={!hydrated || isConnecting || status === "pending"}
           aria-expanded={open}
           aria-haspopup="listbox"
         >
-          {status === "connecting" ? "CONNECTING…" : "CONNECT WALLET"}
+          {isConnecting ? "CONNECTING…" : "CONNECT WALLET"}
           <svg aria-hidden="true" viewBox="0 0 16 16"><path d="M3 13 13 3M6 3h7v7" /></svg>
         </button>
       )}

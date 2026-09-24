@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { parsePythResponse, PYTH_FEEDS } from "@/lib/pyth";
+import { getPythFeedConfig, parsePythResponse } from "@/lib/pyth";
 
 export const dynamic = "force-dynamic";
 
@@ -7,11 +7,28 @@ const PYTH_URL = "https://pyth-lazer.dourolabs.app/v1/latest_price";
 
 export async function GET() {
   const apiKey = process.env.PYTH_PRO_API_KEY;
+  let feedsConfig;
+  try {
+    feedsConfig = getPythFeedConfig();
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Pyth feed configuration is invalid.";
+    return NextResponse.json({ configured: false, mappingConfigured: false, error: message }, { status: 503 });
+  }
   if (!apiKey) {
     return NextResponse.json(
       {
         configured: false,
         error: "PYTH_PRO_API_KEY is not configured. The interface must remain in labelled scenario mode.",
+      },
+      { status: 503 },
+    );
+  }
+  if (!feedsConfig) {
+    return NextResponse.json(
+      {
+        configured: false,
+        mappingConfigured: false,
+        error: "Catalog-confirmed Pyth Pro AAPL and AAPLX-test feed IDs are not configured. The interface must remain in labelled scenario mode.",
       },
       { status: 503 },
     );
@@ -25,7 +42,7 @@ export async function GET() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        priceFeedIds: [PYTH_FEEDS.underlying.id, PYTH_FEEDS.tokenized.id],
+        priceFeedIds: [feedsConfig.underlying.id, feedsConfig.tokenized.id],
         properties: [
           "price",
           "exponent",
@@ -49,12 +66,13 @@ export async function GET() {
       );
     }
 
-    const market = parsePythResponse(await response.json());
+    const market = parsePythResponse(await response.json(), feedsConfig);
     return NextResponse.json({
       configured: true,
+      mappingConfigured: true,
       snapshot: market.snapshot,
-      signedPayload: market.signedPayload,
-      verification: "Signed Pyth payload received; onchain verification is not yet implemented.",
+      unverifiedSolanaMessage: market.unverifiedSolanaMessage,
+      verification: "Solana-format Pyth bytes received over REST. They are unverified until an on-chain Pyth verifier accepts the exact transaction message.",
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown Pyth adapter failure.";

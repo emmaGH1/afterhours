@@ -1,36 +1,30 @@
-# Model routing for the Stocklana sprint
+# Model routing for the Stocklana build
 
-**Purpose:** reserve the strongest reasoning for decisions that can invalidate the product or misstate its trust model. Use the faster workhorse for implementation, and the lighter model only for tightly bounded mechanical work.
+Use each model for the work the user selected. Keep the root integrator responsible for scope, shared contracts, merges, and the judge path.
 
-## Recommended assignment
-
-| Work | Model | Effort | Review gate |
+| Work | Model | Effort | Review boundary |
 | --- | --- | --- | --- |
-| Product architecture, Pyth/Solana integration design, risk rules, security, final claims review | `gpt-6-astra` | High or xhigh | Required before changing oracle verification, wallet signing, numerical risk thresholds, or public claims |
-| Visual-system translation, information hierarchy, accessibility, final visual QA | `gpt-6-astra` | High | Check against the user-provided `DESIGN.md`; do not alter shared data contracts |
-| Main TypeScript/React implementation, integration, debugging, meaningful tests | `gpt-6-sol` | High | Root integrator reviews shared interfaces and runs checks |
-| Bounded components, fixed-fixture variations, copy cleanup, README formatting | `gpt-6-luna` | Medium | Provide exact files and acceptance criteria; review before merging |
+| Bounded components/features, fixtures, copy cleanup, documentation | `gpt-6-luna` | xhigh | Work from a frozen interface and explicit acceptance criteria; integrator reviews before merge. |
+| Difficult Pyth/Solana integration, transaction construction, and protocol decisions | `gpt-5.6-terra` | high | Prove the end-to-end dependency early; document actual evidence and trust boundaries. |
+| UI design and implementation, debugging, and review | `gpt-6-sol` | high | Follow the approved Heron-inspired design source; review rendered states rather than code alone. |
 
-## Task lanes and handoffs
+These are task assignments, not automatic model selection or agent spawning. The user has explicitly excluded other models from the routing plan. If an assigned model is unavailable, tell the root integrator and use the closest available model only after the integrator resolves the task routing; never silently move sensitive integration work to a bounded code lane.
 
-| Lane | Owns | Must hand over |
+## Work lanes and handoffs
+
+| Lane | Owns | Handoff evidence |
 | --- | --- | --- |
-| Market and risk | Pyth field mapping, freshness/session rules, fixtures, policy tests | Changed files, source/fixture status, test output, threshold assumptions |
-| Protocol and transactions | Wallet, account/program instructions, transaction construction, receipts | Network, signer, transaction signature, explorer proof, enforcement boundary |
-| Interface | Heron-derived shell, responsive layout, accessible states, frozen-contract wiring | Screenshot, viewport, keyboard/reduced-motion checks, data state shown |
-| Evidence | README, architecture, judge steps, demo narration, limitation log | Reproducible judge path, verified claims, final recording/capture |
+| Reference and risk preview | Labelled simulated scenarios, browser policy limits, optional Pyth access investigation | Scenario inputs, UI-only decision examples, Pyth access/feed-ID status |
+| Solana route | Devnet SPL Token Swap v3 pool, manifest-bound reserves/fee, direct wallet transaction, receipts | Separate script and browser-wallet signatures, balance deltas, minimum-output result, enforcement boundary |
+| Interface | `/` landing, `/workspace`, responsive/accessibility states, wiring to reviewed contracts | Screenshot per reviewed section, viewport and state, keyboard and reduced-motion results |
+| Demo and evidence | Judge path, demo script, README updates when separately assigned, disclosure | Rehearsed flow, verified links, claims matched to artifacts |
 
-One root integrator owns the shared contracts, scope, final merges, and judge flow. Every handoff names changed files, commands run, proof produced, known limitation, and next integration action. Do not overlap edits to shared files; split work by files or wait for a handoff.
+The root integrator owns shared types and integrates each lane. Do not overlap edits to shared files; name changed files, commands run, proof, known limitations, and next action at handoff.
 
-## Dispatch rule and limits
+## Current baseline and target
 
-This file describes recommended assignments; local `AGENTS.md` instructions may repeat them, but neither file automatically selects a model or spawns a subtask. Choose the model and reasoning effort explicitly when creating each agent task. Keep the root integrator on the current host's strongest suitable model for architecture and reviews. If that model is unavailable, keep security-sensitive work with the strongest available model and reduce the scope rather than sending it to an unreviewed low-cost lane.
+The active implementation is the fallback: `/workspace` previews clearly labelled simulated reference scenarios, reads reserves and the fixed fee from the devnet pool, and applies a soft browser-side risk check before a direct SPL Token Swap v3 transaction. The underlying pool can be called directly, so the UI policy is bypassable and is not on-chain protection.
 
-Low-cost tasks must not independently change oracle verification, transaction construction, wallet signing, numeric risk rules, secrets, deployment settings, or final claims. The workhorse reviews their implementation; the strongest reviewer also checks oracle, transaction, and security-sensitive changes. Model availability and names can change, so verify the host's current choices at dispatch time.
+The script-generated pool swap is verified at slot 503568283 and proves direct pool settlement/minimum output only. The browser-wallet swap action is implemented but remains unverified until its own signature confirms and its AAPLX-test balance delta is observed. Pyth credentials and catalog-confirmed feed IDs are unavailable; do not claim live/signed Pyth data or Pyth verification. The optional memo only records browser-computed fields.
 
-## Current project state
-
-- Core UI, deterministic policy scenarios, server-side Pyth adapter, and devnet wallet connection exist.
-- The wallet can record a **policy memo only**. There is no AMM program, token swap, onchain risk enforcement, or onchain Pyth verification yet.
-- A live Pyth Pro key and a successful devnet wallet receipt are unverified prerequisites. Do not claim either until the app proves it.
-- Do not start the PreStocks extension until the end-to-end core path and submission package are complete.
+An experimental Rust guard was not compiled or deployed: the WSL build failed and its draft diverges from the UI's soft `OPEN` policy. It is unfinished and excluded from the judge path. Keep tasks focused on the interface-level swap flow, truthful receipts, and demo verification. Do not resume guard or Pyth-on-chain work without a new scope decision. Do not add a custom AMM, PreStocks, dynamic-fee collection, or extra markets.

@@ -1,0 +1,53 @@
+{
+  "network": "devnet",
+  "verifiedAt": "2026-09-24T17:08:04.212Z",
+  "settlement": "SPL Token Swap v3 constant-product pool",
+  "programId": "SwapsVeCiPHMUAtzQWZw7RjsKjgCjhwU55QGu4U1Szw",
+  "poolAddress": "7qa8JFCaHB5KzhD7EYejEgbkaKr3HYjT7LUbuzsaTNFq",
+  "poolAuthority": "AAAZEx7YisBUWWD2GZX3i38H7vZWCkKtv62JhabDTS4R",
+  "mints": {
+    "usdcTest": {
+      "address": "F7GpvkuKjESazTTkjvdBn2jFYFgMe5Mbks1zJ9ekcBJV",
+      "decimals": 6
+    },
+    "aaplxTest": {
+      "address": "4VNAoDuqqGLLjXayM6NN1H2PBtcQJEXByw9R384dVZvx",
+      "decimals": 6
+    },
+    "pool": {
+      "address": "FwZqJ6Dn6GcKazhndvsKzABg4AQKA6BHwCYFX3XdBX9f",
+      "decimals": 6
+    }
+  },
+  "reserveAccounts": {
+    "usdcTest": "GZzceiWrJgse8tnyYcEX6wK9wnNXsxwcLMrCSji5syha",
+    "aaplxTest": "3gZ3Cac3wRZ9Qi1skjYXRBewbCKStx7qEUfvHiAoke6H"
+  },
+  "feeAccount": "EURWavE3cRcvHupCytrvYPRiUfSAAaQaMkimyDx6bVyp",
+  "poolFee": {
+    "numerator": "30",
+    "denominator": "10000",
+    "basisPoints": 30
+  },
+  "initialPoolSpot": {
+    "usdcTestPerAaplxTest": "230",
+    "reserveUsdcTest": "115000000000",
+    "reserveAaplxTest": "500000000"
+  },
+  "proof": {
+    "signature": "5qRPZVjqCoRGyJqAKSRL9owHSTmZavnAeHuK76vdGESafiKDPzPdd4Ktg2sMEnnHVysiKjdnqxuhbCmduXgLMWMy",
+    "explorerUrl": "https://explorer.solana.com/tx/5qRPZVjqCoRGyJqAKSRL9owHSTmZavnAeHuK76vdGESafiKDPzPdd4Ktg2sMEnnHVysiKjdnqxuhbCmduXgLMWMy?cluster=devnet",
+    "input": {
+      "requestedAmount": "10000000",
+      "observedDebit": "9999985",
+      "symbol": "USDC-test"
+    },
+    "expectedOutput": "43344",
+    "minimumOutput": "42910",
+    "output": {
+      "amount": "43344",
+      "symbol": "AAPLX-test"
+    }
+  },
+  "disclosure": "Devnet test assets only. This pool is not a backed security or production liquidity."
+}

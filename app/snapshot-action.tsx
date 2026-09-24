@@ -33,7 +33,7 @@ export function SnapshotAction({ snapshot, risk }: { snapshot: MarketSnapshot; r
       divergenceBps: risk.divergenceBps,
       confidenceBps: risk.confidenceBps,
       decision: risk.state,
-      feeBps: risk.feeBps,
+      poolFeeBps: snapshot.poolFeeBps ?? null,
       maxInputUsd: risk.maxInputUsd,
       trust: "ui-computed; no swap or oracle verification",
     });

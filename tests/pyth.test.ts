@@ -1,14 +1,19 @@
 import { describe, expect, it } from "vitest";
-import { parsePythResponse } from "../lib/pyth";
+import { getPythFeedConfig, parsePythResponse, type PythFeedConfig } from "../lib/pyth";
+
+const confirmedFixtureFeeds: PythFeedConfig = {
+  underlying: { id: 1001, catalogSymbol: "Equity.US.AAPL/USD" },
+  tokenized: { id: 1002, catalogSymbol: "Crypto.AAPLX/USD" },
+};
 
 describe("Pyth response parser", () => {
-  it("maps signed AAPL and AAPLX fields without floating the timestamps", () => {
+  it("maps explicitly configured fixture feeds without floating the timestamps", () => {
     const result = parsePythResponse({
       parsed: {
         timestampUs: "1780000000000000",
         priceFeeds: [
           {
-            priceFeedId: 922,
+            priceFeedId: 1001,
             price: "22918000",
             exponent: -5,
             confidence: "8000",
@@ -17,7 +22,7 @@ describe("Pyth response parser", () => {
             feedUpdateTimestamp: "1779999999000000",
           },
           {
-            priceFeedId: 1792,
+            priceFeedId: 1002,
             price: "22974000000",
             exponent: -8,
             confidence: "12000000",
@@ -28,16 +33,23 @@ describe("Pyth response parser", () => {
         ],
       },
       solana: { encoding: "hex", data: "deadbeef" },
-    });
+    }, confirmedFixtureFeeds);
 
     expect(result.snapshot.underlyingPrice).toBeCloseTo(229.18);
     expect(result.snapshot.tokenPrice).toBeCloseTo(229.74);
     expect(result.snapshot.feedUpdateTimestampMs).toBe(1779999999000);
     expect(result.snapshot.messageTimestampMs).toBe(1780000000000);
-    expect(result.signedPayload.data).toBe("deadbeef");
+    expect(result.unverifiedSolanaMessage.data).toBe("deadbeef");
   });
 
-  it("rejects a response without signed Solana bytes", () => {
-    expect(() => parsePythResponse({ parsed: { timestampUs: "1", priceFeeds: [] } })).toThrow();
+  it("rejects a response without Solana-format bytes", () => {
+    expect(() => parsePythResponse({ parsed: { timestampUs: "1", priceFeeds: [] } }, confirmedFixtureFeeds)).toThrow();
+  });
+
+  it("requires deployment-supplied catalog-confirmed IDs", () => {
+    expect(getPythFeedConfig({})).toBeNull();
+    expect(() => getPythFeedConfig({ PYTH_AAPL_FEED_ID: "4", PYTH_AAPLX_FEED_ID: "4" })).toThrow();
+    expect(getPythFeedConfig({ PYTH_AAPL_FEED_ID: "1001", PYTH_AAPLX_FEED_ID: "1002" }))
+      .toMatchObject({ underlying: { id: 1001 }, tokenized: { id: 1002 } });
   });
 });
