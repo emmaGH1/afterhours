@@ -4,23 +4,22 @@
 
 At 10:26 a.m. Lagos time on Thursday, September 24, the user revised the remaining personal build time to **about seven focused hours**. Target a demo-complete build within those seven hours and preserve Friday afternoon for submission recovery if available.
 
-## Build status and revised target (11:30 a.m. Lagos time)
+## Build status and revised target (1:23 p.m. Lagos time)
 
 **Built:** responsive one-screen interface in the supplied Heron-inspired direction, three labelled policy scenarios, deterministic `open`/`guarded`/`paused` decisions, server-side Pyth Pro adapter/parser, Wallet Standard devnet connection, and nine risk/parser tests.
 
 **New fallback proof path:** the interface can submit a policy snapshot as a Solana Memo from a connected devnet wallet. It is a public testnet transaction carrying browser-computed fields. It moves no tokens, verifies no Pyth signature, and enforces no risk decision. The swap button remains disabled because no AMM program is deployed.
 
-**Still unverified:** a real Pyth Pro response (requires a local trial key), a successful wallet-signed devnet memo receipt on a public RPC, and an onchain AMM. Present the current build as an oracle-aware risk-policy prototype with an optional audit memo, not as a working AMM. Budget roughly **5.5 hours** for the remaining judge path from this checkpoint; adjust if the actual clock differs.
+**Still unverified:** a real Pyth Pro response (requires a local trial key), a successful wallet-signed devnet memo receipt on a public RPC, and an onchain AMM. Present the current build as an oracle-aware risk-policy prototype with an optional audit memo, not as a working AMM. The original seven-hour work window began around 10:00 a.m.; budget roughly **3.5 hours** for the remaining judge path from this checkpoint.
 
-## Remaining ~5.5-hour execution roadmap
+## Remaining ~3.5-hour execution roadmap
 
-1. **First hour: prove dependencies.** Add a Pyth Pro trial key locally and confirm both feeds and timestamp fields. Connect a devnet Wallet Standard wallet and submit a policy memo; inspect its confirmation in Explorer. Capture precise errors for either blocker. Do not install a Rust/Anchor stack in this sprint.
-2. **Hour 1–2: audit risk rules.** Test freshness, divergence, pause thresholds, amount limits, and missing pool quotes. Keep confidence and publisher count labelled as observations unless thresholds are implemented and tested.
-3. **Hour 2–3: finish interface states.** Check Pyth unavailable/live, wallet disconnected, memo pending/failure/success, and paused risk. Review 1366x768, 1440x900, 390px mobile, keyboard focus, wrapping, and reduced motion.
-4. **Hour 3–4: prepare evidence.** Deploy only if an existing hosting account is available; refresh the screenshot and write exact setup/expected output into the judge README. Local reproducibility takes priority over hosting setup.
-5. **Hour 4–5.5: rehearse and submit.** Rehearse the 90-second demo; run typecheck, tests, and production build; inspect staged files/secrets; finish submission fields and preserve upload time. Do not start PreStocks.
+1. **First 45 minutes: dependency gate.** If available, add the Pyth Pro key locally and confirm both feeds and timestamp fields. Connect a devnet wallet and submit a memo; inspect confirmation in Explorer. Timebox missing access to 20 minutes, then keep the labelled fallback. Do not install a Rust/Anchor stack.
+2. **Next 45 minutes: risk audit.** Exercise freshness, confidence width, publisher count, divergence, hard pause, amount limit, and missing pool quote. Fix only defects that change the judge path; keep demonstration thresholds labelled as prototypes.
+3. **Next 45 minutes: final interface QA.** Check Pyth unavailable/live, wallet disconnected, memo pending/failure/signature, and paused risk. Review 1366x768, 1440x900, 390px mobile, keyboard focus, wrapping, and reduced motion. Refresh the screenshot if the local app is reachable.
+4. **Final 75 minutes: demo and submission.** Rehearse the 90-second cut; run typecheck, tests, production build; finalize the judge README and submission fields. Deploy only if an existing account makes it quick. Keep this block for the demo/upload; do not start PreStocks or an AMM program.
 
-The actual acceptance target is **live Pyth data if the key works, a confirmed devnet policy memo if public RPC access works, and an accurate risk-policy demo in either case**. A real AMM and onchain risk enforcement remain out of the verified sprint scope.
+The actual acceptance target is **live Pyth data if the key works, a confirmed devnet policy memo if public RPC access works, and an accurate risk-policy demo in either case**. A real AMM and onchain risk enforcement remain out of the verified sprint scope. Parallel work is bounded to independent files: risk review/tests, responsive QA, and submission/demo copy; the key and wallet gates are sequential. Model selection remains manual per task.
 
 ## Integration decision
 
