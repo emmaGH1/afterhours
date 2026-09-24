@@ -2,23 +2,23 @@ import { describe, expect, it } from "vitest";
 import { assessDirectSwap } from "../lib/direct-swap";
 import { scenarios } from "../lib/market";
 import type { VerifiedPool } from "../lib/pool";
+import committedPoolManifest from "../public/pool-manifest.json";
 
-const address = "11111111111111111111111111111111";
 const pool: VerifiedPool = {
-  poolAddress: address,
-  poolAuthority: address,
-  programId: "SwapsVeCiPHMUAtzQWZw7RjsKjgCjhwU55QGu4U1Szw",
+  poolAddress: committedPoolManifest.poolAddress,
+  poolAuthority: committedPoolManifest.poolAuthority,
+  programId: committedPoolManifest.programId,
   mints: {
-    usdcTest: { address, decimals: 6 },
-    aaplxTest: { address, decimals: 6 },
-    pool: { address, decimals: 6 },
+    usdcTest: committedPoolManifest.mints.usdcTest,
+    aaplxTest: committedPoolManifest.mints.aaplxTest,
+    pool: committedPoolManifest.mints.pool,
   },
-  reserveAccounts: { usdcTest: address, aaplxTest: address },
-  feeAccount: address,
+  reserveAccounts: committedPoolManifest.reserveAccounts,
+  feeAccount: committedPoolManifest.feeAccount,
   poolPrice: 230,
-  poolFeeBps: 30,
+  poolFeeBps: committedPoolManifest.poolFee.basisPoints,
   reserves: { usdc: 23_000, aaplx: 100 },
-  proof: { signature: "test-signature", explorerUrl: "https://explorer.solana.com" },
+  proof: committedPoolManifest.proof,
 };
 
 describe("direct-pool fallback gate", () => {
@@ -27,7 +27,20 @@ describe("direct-pool fallback gate", () => {
   });
 
   it("refuses a manifest pointing at another swap program", () => {
-    expect(assessDirectSwap({ ...pool, programId: address }, scenarios.fresh, 25).allowed).toBe(false);
+    expect(assessDirectSwap({ ...pool, programId: pool.poolAddress }, scenarios.fresh, 25).allowed).toBe(false);
+  });
+
+  it("refuses a different pool or authority even when it has a valid-looking address", () => {
+    expect(assessDirectSwap({ ...pool, poolAddress: pool.mints.pool.address }, scenarios.fresh, 25).allowed).toBe(false);
+    expect(assessDirectSwap({ ...pool, poolAuthority: pool.mints.pool.address }, scenarios.fresh, 25).allowed).toBe(false);
+  });
+
+  it("refuses mismatched test mints, reserve accounts, fee binding, decimals, or fee", () => {
+    expect(assessDirectSwap({ ...pool, mints: { ...pool.mints, usdcTest: { ...pool.mints.usdcTest, address: pool.mints.pool.address } } }, scenarios.fresh, 25).allowed).toBe(false);
+    expect(assessDirectSwap({ ...pool, mints: { ...pool.mints, aaplxTest: { ...pool.mints.aaplxTest, decimals: 9 } } }, scenarios.fresh, 25).allowed).toBe(false);
+    expect(assessDirectSwap({ ...pool, reserveAccounts: { ...pool.reserveAccounts, usdcTest: pool.feeAccount } }, scenarios.fresh, 25).allowed).toBe(false);
+    expect(assessDirectSwap({ ...pool, feeAccount: pool.reserveAccounts.aaplxTest }, scenarios.fresh, 25).allowed).toBe(false);
+    expect(assessDirectSwap({ ...pool, poolFeeBps: 31 }, scenarios.fresh, 25).allowed).toBe(false);
   });
 
   it("allows a labelled simulated scenario with a real-pool quote", () => {

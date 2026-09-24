@@ -150,7 +150,7 @@ export function DirectSwapAction({ pool, snapshot, amount }: DirectSwapActionPro
       <p className="action-note"><strong>WALLET REQUIREMENT:</strong> switch the connected Wallet Standard wallet to Solana Devnet. It needs USDC-test plus enough devnet SOL for the destination account and transaction fee.</p>
       <p className="action-note"><strong>INTERFACE-LEVEL CHECK:</strong> This direct pool call is not protected by an on-chain guard.</p>
       <p className="action-note">{assessment.reason}</p>
-      {minOut ? <p className="action-note">Minimum output: {minOut.toString()} base units of AAPLX-test. The pool&apos;s fixed {pool?.poolFeeBps} bps fee and current reserves set this floor.</p> : null}
+      {minOut ? <p className="action-note">Minimum output: {minOut.toString()} base units of AAPLX-test. This includes a 1% slippage margin below the reserve-derived quote; the pool&apos;s fixed {pool?.poolFeeBps} bps fee and current reserves set the floor.</p> : null}
       {receipt ? (
         <p className="transaction-receipt" role="status">
           AAPLX-TEST BALANCE INCREASE VERIFIED · {receipt.outputRaw.toString()} BASE UNITS · <a href={`https://explorer.solana.com/tx/${receipt.signature}?cluster=devnet`} target="_blank" rel="noreferrer">EXPLORER RECEIPT ↗</a>

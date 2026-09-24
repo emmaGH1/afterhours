@@ -1,7 +1,8 @@
 import { evaluateRisk, quoteOutput, type MarketSnapshot, type RiskDecision } from "./market";
 import type { VerifiedPool } from "./pool";
+import committedPoolManifest from "../public/pool-manifest.json";
 
-const EXPECTED_SWAP_PROGRAM_ID = "SwapsVeCiPHMUAtzQWZw7RjsKjgCjhwU55QGu4U1Szw";
+const COMMITTED_POOL = committedPoolManifest;
 
 export interface DirectSwapAssessment {
   allowed: boolean;
@@ -13,6 +14,32 @@ export interface DirectSwapAssessment {
 
 function hasAddress(value: string | undefined) {
   return typeof value === "string" && value.length >= 32 && value.length <= 44;
+}
+
+function hasCommittedPoolBinding(pool: VerifiedPool) {
+  const expected = COMMITTED_POOL;
+  const calculatedPoolPrice = pool.reserves.usdc / pool.reserves.aaplx;
+  const priceMatchesReserves = Number.isFinite(calculatedPoolPrice) && calculatedPoolPrice > 0
+    && Math.abs(pool.poolPrice / calculatedPoolPrice - 1) < 0.000001;
+  return pool.poolAddress === expected.poolAddress
+    && pool.poolAuthority === expected.poolAuthority
+    && pool.programId === expected.programId
+    && pool.mints.usdcTest.address === expected.mints.usdcTest.address
+    && pool.mints.usdcTest.decimals === expected.mints.usdcTest.decimals
+    && pool.mints.aaplxTest.address === expected.mints.aaplxTest.address
+    && pool.mints.aaplxTest.decimals === expected.mints.aaplxTest.decimals
+    && pool.mints.pool.address === expected.mints.pool.address
+    && pool.mints.pool.decimals === expected.mints.pool.decimals
+    && pool.reserveAccounts.usdcTest === expected.reserveAccounts.usdcTest
+    && pool.reserveAccounts.aaplxTest === expected.reserveAccounts.aaplxTest
+    && pool.feeAccount === expected.feeAccount
+    && pool.poolFeeBps === expected.poolFee.basisPoints
+    && pool.proof.signature === expected.proof.signature
+    && pool.proof.explorerUrl === expected.proof.explorerUrl
+    && Number.isFinite(pool.reserves.usdc) && pool.reserves.usdc > 0
+    && Number.isFinite(pool.reserves.aaplx) && pool.reserves.aaplx > 0
+    && Number.isFinite(pool.poolFeeBps) && pool.poolFeeBps >= 0 && pool.poolFeeBps < 10_000
+    && priceMatchesReserves;
 }
 
 /**
@@ -35,12 +62,13 @@ export function assessDirectSwap(
     poolFeeBps: pool.poolFeeBps,
   } : snapshot;
   const risk = evaluateRisk(executionSnapshot, nowMs);
-  if (!pool || !pool.proof?.signature || pool.programId !== EXPECTED_SWAP_PROGRAM_ID || !hasAddress(pool.poolAddress)
+  if (!pool || !pool.proof?.signature || !hasAddress(pool.poolAddress)
     || !hasAddress(pool.poolAuthority) || !hasAddress(pool.programId)
     || !hasAddress(pool.reserveAccounts?.usdcTest) || !hasAddress(pool.reserveAccounts?.aaplxTest)
     || !hasAddress(pool.feeAccount) || !hasAddress(pool.mints?.usdcTest?.address)
-    || !hasAddress(pool.mints?.aaplxTest?.address) || !hasAddress(pool.mints?.pool?.address)) {
-    return { allowed: false, reason: "A verified devnet pool manifest is required before a direct swap.", disclosure: null, risk, quoteAaplx: null };
+    || !hasAddress(pool.mints?.aaplxTest?.address) || !hasAddress(pool.mints?.pool?.address)
+    || !hasCommittedPoolBinding(pool)) {
+    return { allowed: false, reason: "The pool API response does not match the committed devnet pool binding.", disclosure: null, risk, quoteAaplx: null };
   }
   const disclosure = snapshot.source === "live"
     ? "Live Pyth reference; token swap real; no on-chain guard."
