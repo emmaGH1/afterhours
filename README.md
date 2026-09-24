@@ -12,7 +12,7 @@ AfterHours is an oracle-aware risk-policy prototype for tokenized equities. It c
 - Server-only Pyth Pro route for AAPL feed `922` and AAPLX feed `1792`.
 - Strict Pyth response parser that requires both feeds and signed Solana payload bytes.
 - Solflare/Phantom Wallet Standard connection on Solana devnet.
-- Optional wallet-signed devnet memo that records the selected policy decision and links to its Explorer receipt.
+- Optional wallet-signed devnet Memo transaction that submits the selected policy fields and exposes an Explorer signature link; confirmation remains unverified.
 - Nine passing tests covering policy boundaries, quote rejection, oracle-quality signals, price scaling, timestamps, and missing signatures.
 
 **This prototype does not execute a swap or enforce policy onchain.** The swap action is disabled because no AMM program is deployed. The memo is a public devnet audit note only: it records a browser-computed decision, moves no tokens, and does not verify Pyth's signature. Market scenarios are simulations until a Pyth Pro key supplies a live response. The interface labels those sources.
