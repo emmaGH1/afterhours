@@ -8,13 +8,13 @@ At 10:26 a.m. Lagos time on Thursday, September 24, the user revised the remaini
 
 **Built:** responsive one-screen interface in the supplied Heron-inspired direction, three labelled policy scenarios, deterministic `open`/`guarded`/`paused` decisions, server-side Pyth Pro adapter/parser, Wallet Standard devnet connection, and nine risk/parser tests.
 
-**New fallback proof:** a connected devnet wallet can write a policy snapshot as a Solana Memo. This is a public testnet transaction recording browser-computed fields. It moves no tokens, verifies no Pyth signature, and enforces no risk decision. The swap button remains disabled because no AMM program is deployed.
+**New fallback proof path:** the interface can submit a policy snapshot as a Solana Memo from a connected devnet wallet. It is a public testnet transaction carrying browser-computed fields. It moves no tokens, verifies no Pyth signature, and enforces no risk decision. The swap button remains disabled because no AMM program is deployed.
 
 **Still unverified:** a real Pyth Pro response (requires a local trial key), a successful wallet-signed devnet memo receipt on a public RPC, and an onchain AMM. Present the current build as an oracle-aware risk-policy prototype with an optional audit memo, not as a working AMM. Budget roughly **5.5 hours** for the remaining judge path from this checkpoint; adjust if the actual clock differs.
 
 ## Remaining ~5.5-hour execution roadmap
 
-1. **First hour: prove dependencies.** Add a Pyth Pro trial key locally and confirm both feeds and timestamp fields. Connect a devnet Wallet Standard wallet and record a policy memo; inspect it in Explorer. Capture precise errors for either blocker. Do not install a Rust/Anchor stack in this sprint.
+1. **First hour: prove dependencies.** Add a Pyth Pro trial key locally and confirm both feeds and timestamp fields. Connect a devnet Wallet Standard wallet and submit a policy memo; inspect its confirmation in Explorer. Capture precise errors for either blocker. Do not install a Rust/Anchor stack in this sprint.
 2. **Hour 1–2: audit risk rules.** Test freshness, divergence, pause thresholds, amount limits, and missing pool quotes. Keep confidence and publisher count labelled as observations unless thresholds are implemented and tested.
 3. **Hour 2–3: finish interface states.** Check Pyth unavailable/live, wallet disconnected, memo pending/failure/success, and paused risk. Review 1366x768, 1440x900, 390px mobile, keyboard focus, wrapping, and reduced motion.
 4. **Hour 3–4: prepare evidence.** Deploy only if an existing hosting account is available; refresh the screenshot and write exact setup/expected output into the judge README. Local reproducibility takes priority over hosting setup.

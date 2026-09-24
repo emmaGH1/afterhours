@@ -56,11 +56,11 @@ export function SnapshotAction({ snapshot, risk }: { snapshot: MarketSnapshot; r
   return (
     <div className="snapshot-action">
       <button className="primary-action snapshot-button" type="button" onClick={recordSnapshot} disabled={!connected || pending}>
-        {pending ? "WAITING FOR DEVNET…" : signature ? "SNAPSHOT RECORDED" : connected ? "RECORD POLICY SNAPSHOT" : "CONNECT WALLET TO RECORD"}
+        {pending ? "WAITING FOR DEVNET…" : signature ? "MEMO SUBMITTED" : connected ? "RECORD POLICY SNAPSHOT" : "CONNECT WALLET TO RECORD"}
         <span aria-hidden="true">↗</span>
       </button>
-      <p className="action-note">Devnet memo only: the wallet pays a testnet fee. This writes a public policy record; it does not move tokens or enforce a swap.</p>
-      {signature ? <p className="transaction-receipt" role="status">DEVNET RECEIPT · <a href={`https://explorer.solana.com/tx/${signature}?cluster=devnet`} target="_blank" rel="noreferrer">{signature.slice(0, 12)}…{signature.slice(-8)} ↗</a></p> : null}
+      <p className="action-note">Devnet memo only: the wallet pays a testnet fee. If confirmed, it exposes this policy snapshot publicly; it does not move tokens or enforce a swap.</p>
+      {signature ? <p className="transaction-receipt" role="status">DEVNET SIGNATURE · <a href={`https://explorer.solana.com/tx/${signature}?cluster=devnet`} target="_blank" rel="noreferrer">{signature.slice(0, 12)}…{signature.slice(-8)} ↗</a> · CHECK CONFIRMATION IN EXPLORER</p> : null}
       {error ? <p className="wallet-error" role="alert">Could not record snapshot: {error}</p> : null}
     </div>
   );

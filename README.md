@@ -40,7 +40,7 @@ npm run build
 1. Compare the same USDC input under **Regular / fresh** and **Closed / carried**.
 2. Observe the effective fee, maximum input, reference age, and stated policy reason change.
 3. Select **Risk limit crossed** and confirm the quote and action are blocked.
-4. Connect a devnet wallet and record the selected policy snapshot. Inspect the Explorer memo and verify that it is a record-only transaction; no token balance changes.
+4. Connect a devnet wallet and submit the selected policy snapshot. Inspect the Explorer signature and confirmation state; when confirmed, verify that it is a record-only transaction with no token balance changes.
 
 ## Design attribution
 
