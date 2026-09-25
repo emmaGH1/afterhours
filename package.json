@@ -10,7 +10,8 @@
     "test": "vitest run",
     "smoke:devnet": "node scripts/devnet-smoke.mjs",
     "pool:devnet": "node scripts/devnet-pool-proof.mjs",
-    "fund:test-wallet": "node scripts/fund-test-wallet.mjs"
+    "fund:test-wallet": "node scripts/fund-test-wallet.mjs",
+    "wallet:export-import": "node scripts/export-demo-wallet-import.mjs"
   },
   "dependencies": {
     "@fontsource-variable/jetbrains-mono": "^5.3.0",

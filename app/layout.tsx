@@ -1,11 +1,36 @@
 import "@fontsource-variable/space-grotesk";
 import "@fontsource-variable/jetbrains-mono";
 import "./globals.css";
+import type { Metadata } from "next";
 import { Providers } from "./providers";
 
-export const metadata = {
-  title: "AfterHours — Stock-token swap prototype",
-  description: "Explore simulated reference-aware limits and direct Solana devnet test-token swaps with live pool quotes.",
+const title = "AfterHours — Stock-token swap prototype";
+const description = "Explore simulated reference-aware limits and direct Solana devnet test-token swaps with live pool quotes.";
+const siteOrigin = process.env.NEXT_PUBLIC_SITE_URL ?? (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+
+export const metadata: Metadata = {
+  metadataBase: new URL(siteOrigin),
+  title,
+  description,
+  icons: {
+    icon: [
+      { url: "/afterhours-mark.svg", type: "image/svg+xml" },
+      { url: "/afterhours-mark.png", type: "image/png", sizes: "1024x1024" },
+    ],
+    apple: [{ url: "/afterhours-mark.png", type: "image/png", sizes: "1024x1024" }],
+  },
+  openGraph: {
+    title,
+    description,
+    type: "website",
+    images: [{ url: "/afterhours-mark.png", width: 1024, height: 1024, alt: "AfterHours geometric mark on warm paper" }],
+  },
+  twitter: {
+    card: "summary",
+    title,
+    description,
+    images: [{ url: "/afterhours-mark.png", alt: "AfterHours geometric mark on warm paper" }],
+  },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

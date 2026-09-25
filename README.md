@@ -4,10 +4,10 @@ AfterHours is a devnet swap interface for tokenized-equity test assets. It previ
 
 ## Current status
 
-- `/` explains the product; `/workspace` shows simulated reference states, the live devnet pool reserve/fee quote, and a direct Wallet Standard swap action.
+- `/` contains the hero, Built With rail, full-height mechanism and proof sections, and the system-record footer. `/workspace` shows simulated reference states, the live devnet pool reserve/fee quote, and a direct Wallet Standard swap action.
 - Pyth Pro credentials and catalog-confirmed AAPL/AAPLX feed IDs are unavailable. Do not treat scenario prices as live or signed Pyth data.
 - The test pool's fixed fee is **30 bps**. Devnet reserves are read from the manifest's on-chain reserve accounts.
-- A script-submitted pool swap is confirmed. A separate browser-wallet swap has **not yet been verified** with its own confirmed signature and observed AAPLX-test balance increase.
+- A script-submitted pool swap is confirmed. Devnet preflight found 0.05 SOL and 100 USDC-test in the generated demo wallet, with 0 AAPLX-test. A separate browser-wallet swap has **not yet been submitted or verified**: Solflare was unavailable in the controllable browser session, so there is no wallet signature or measured balance delta.
 - No on-chain AfterHours guard or Pyth signature verification is compiled, deployed, or part of the judge path. The interface limit can be bypassed by calling the pool directly.
 
 The AAPLX-test and USDC-test tokens are devnet test assets, not backed securities or production liquidity.
@@ -34,10 +34,10 @@ Open [http://localhost:3000](http://localhost:3000) and select **Open Workspace*
 
 1. Start at `/` and follow the hero's **Open Workspace** link.
 2. On `/workspace`, select **Regular / fresh** and **Closed / carried**. These reference values are simulated. The pool reserves and 30 bps fee are read from devnet when the RPC responds.
-3. Enter `25` USDC-test. Review the reserve-derived quote, interface limit, and policy reason. An over-limit or paused scenario disables the action in the browser; that does not represent an on-chain rejection.
-4. To try the direct swap, connect a Wallet Standard wallet on **Solana Devnet** with enough USDC-test and devnet SOL. Sign **Swap USDC-test for AAPLX-test**. On confirmation, the workspace shows an Explorer link and checks for an AAPLX-test balance increase. **This browser-wallet path is not yet verified; only call it successful after its own transaction confirms and the balance delta appears.**
+3. On `/workspace`, the trade panel leads: scenario selector and policy decision sit above the amount field, and the price-envelope chart sits below the action. Quote modes are explicit — loading, verified devnet pool, preview-only (sample reserves), and unavailable — and the swap action only unlocks on a verified reserve payload. The policy remains a browser-side interface check that the pool does not enforce.
+4. Once Solflare is available in the browser, connect the generated demo wallet on **Solana Devnet**. The wallet panel shows balances and an expected-cluster label (the adapter cannot confirm the wallet's selected network). The last read-only preflight showed 100 USDC-test and 0.05 SOL, sufficient for the planned 10 USDC-test trade. Sign **Swap USDC-test for AAPLX-test** only after checking the quote and minimum output. On confirmation the page records before/after balances, persists a local receipt, and shows it on the separate browser-wallet proof card. **The browser-wallet path remains unverified; no browser-wallet transaction has been submitted.**
 
-For local team testing, `npm run fund:test-wallet -- <DEVNET_WALLET_ADDRESS> [USDC_TEST_AMOUNT]` can mint devnet USDC-test only when the ignored, devnet-only pool-payer and mint-authority files from pool setup are present. Fresh clones do not include those authority files. Do not share or commit them; arrange test-token funding through the project maintainer.
+Do not use local mint-authority or pool-payer key files to fund a wallet unless their status has been reviewed and any exposed authority rotated. Never share or commit authority keys. If the demo wallet needs more test USDC, arrange safe Devnet funding through the project maintainer.
 
 ## Verified script pool receipt
 

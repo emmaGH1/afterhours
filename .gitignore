@@ -4,6 +4,8 @@ AGENTS.md
 demo-work/
 recordings/
 raw-assets/
+.freebuff/
+.impeccable/
 # Secrets and local state
 .env
 .env.*
