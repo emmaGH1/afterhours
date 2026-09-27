@@ -2,7 +2,7 @@
 
 A decision desk powered by SERV Reasoning. Give AfterHours a proposed devnet test-token trade and your intent; it gathers dated evidence, compares the requested amount, a permitted smaller trade, and waiting, then presents an advisory plan checked against deterministic constraints.
 
-**Current status:** the intent-based decision desk works locally. The six-case real SERV evaluation passed, including different choices for two intents under the same guarded reserve values. Typecheck, 61 tests, and production build passed. Public deployment verification is pending. This desk does not submit transactions.
+**Current status:** [the public Review Desk](https://afterhours-one-rho.vercel.app/workspace) is verified. The six-case real SERV evaluation passed, including different choices for two intents under the same guarded reserve values; that wait/reduced pair also passed in the public browser. Typecheck, 61 tests, and production build passed. This desk does not submit transactions.
 
 ## Why SERV is part of the decision
 
@@ -65,7 +65,7 @@ USDC-test and AAPLX-test are real devnet SPL test tokens, not backed securities.
 | Devnet pool reserve reads | Verified in the existing foundation |
 | Script-signed pool settlement | Confirmed; separate receipt below |
 | Browser-wallet settlement | No submitted transaction or observed balance delta |
-| Public judge access | Pending deployment and fresh-session check |
+| Public judge access | Verified public browser wait/reduced pair on September 27, 2026 |
 
 A separate script swap at slot 503568283 requested 10 USDC-test, received 0.043344 AAPLX-test, and required at least 0.042910 AAPLX-test output, with the pool's fixed 30 bps fee. [Inspect the devnet settlement](https://explorer.solana.com/tx/5qRPZVjqCoRGyJqAKSRL9owHSTmZavnAeHuK76vdGESafiKDPzPdd4Ktg2sMEnnHVysiKjdnqxuhbCmduXgLMWMy?cluster=devnet). This proves direct settlement, not a SERV plan, browser-wallet swap, oracle verification or risk enforcement.
 

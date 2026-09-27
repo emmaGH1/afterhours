@@ -17,6 +17,8 @@ The run used 12 actual completions, totaling 10,022 tokens. The tool-gathering c
 
 Example final completion IDs: full-size `chatcmpl-ESplrCCI76a9nj90QlNGh0DBIDEK6`; reduced `chatcmpl-ESplvlNPrQriWT9xUyz9q1GTYIfN5`. These identify reviews, not blockchain transactions.
 
+The deployed public browser repeated the pair at approximately 20:50 UTC: full-size preference selected wait in 3.68s (completion `chatcmpl-ESq70ImDVIXE1Zi2T7at4Akddzdz8`, 1,615 tokens), and accepting a smaller amount selected reduced 50 in 5.76s (completion `chatcmpl-ESq7Xzfdx1hgfsoJp3rsY0drXwLWn`, 1,938 tokens). Both used the same verified reserve values and prompt v2. Public Open Graph and X image metadata resolve to the production domain.
+
 Missing reserves, invalid selections/evidence, expiry, cancellation, provider/pool timeouts, admission limits, truncation, and refusal are covered by mocked boundary tests. A live reserve outage was not induced. Free-text explanations remain advisory; selection validation does not independently verify every sentence.
 
 To repeat against a configured local server:
