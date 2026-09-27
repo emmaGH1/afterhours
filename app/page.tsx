@@ -315,6 +315,7 @@ function DecayClock() {
 }
 
 const builtWithItems = [
+  { name: "SERV REASONING", tag: "REVIEW" },
   { name: "SOLANA", tag: "DEVNET" },
   { name: "SPL TOKEN SWAP", tag: "V3" },
   { name: "SOLANA KIT", tag: null },
@@ -685,7 +686,7 @@ function Footer() {
           <a href="#proof">PROOF</a>
         </nav>
         <p>
-          <span>AFTERHOURS / STOCKLANA 2026</span>
+          <span>AFTERHOURS / SERV OPEN TRACK 2026</span>
           <span>DEVNET TEST ASSETS ONLY</span>
           <span>TEST TOKENS ARE NOT BACKED SHARES</span>
           <span>INTERFACE-LEVEL PROTOTYPE</span>
@@ -719,14 +720,14 @@ export default function Home() {
 
         <section className={styles.hero} id="idea" aria-labelledby="hero-heading">
           <div className={styles.heroTopline}>
-            <span>01 / A REFERENCE-AWARE ROUTE PROTOTYPE</span>
+            <span>01 / SERV-POWERED PRE-TRADE REVIEW</span>
             <DecayClock />
           </div>
           <div className={styles.heroGrid}>
             <div className={styles.heroCopy}>
               <p className={styles.overline}><span aria-hidden="true" /> AFTER THE CLOSING BELL</p>
-              <h1 id="hero-heading">STOCK-TOKEN<br />SWAPS.<br /><em>AFTER HOURS.</em></h1>
-              <p className={styles.lede}>Stock tokens keep trading while the underlying stock reference can grow stale. AfterHours explores a route that tightens trade limits or pauses as reference quality weakens.</p>
+              <h1 id="hero-heading">REVIEW.<br />THEN SWAP.<br /><em>AFTER HOURS.</em></h1>
+              <p className={styles.lede}>Ask SERV Reasoning to review a test-token trade before signing. AfterHours brings the pool quote, simulated reference conditions, and interface limits into one evidence-based review.</p>
               <div className={styles.proofRow}>
                 <a
                   className={styles.proofChip}
@@ -738,10 +739,10 @@ export default function Home() {
                   SCRIPT-SIGNED SWAP VERIFIED · SLOT {RECEIPT_SLOT}
                   <span aria-hidden="true">↗</span>
                 </a>
-                <span className={styles.pendingTag}>PYTH + ON-CHAIN GUARD PENDING</span>
+                <span className={styles.pendingTag}>SIMULATED REFERENCES · INTERFACE POLICY</span>
               </div>
               <div className={styles.heroActions}>
-                <Link className={styles.primaryAction} href="/workspace"><span>OPEN WORKSPACE</span><Arrow /></Link>
+                <Link className={styles.primaryAction} href="/workspace"><span>REVIEW A REQUEST</span><Arrow /></Link>
                 <a className={styles.secondaryAction} href="#route">EXPLORE THE ROUTE DESIGN <span aria-hidden="true">↓</span></a>
               </div>
               <p className={styles.heroFootnote}>DEVNET TEST ASSETS · NOT BACKED SHARES</p>

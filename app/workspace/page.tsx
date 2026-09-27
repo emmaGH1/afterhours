@@ -9,6 +9,7 @@ import { NetworkStatus } from "../network-status";
 import { PolicyDecision } from "../policy-decision";
 import { ProofCards } from "../proof-cards";
 import { DirectSwapAction } from "../direct-swap-action";
+import { ServReview } from "../serv-review";
 
 const scenarioLabels = {
   fresh: "REGULAR / FRESH",
@@ -158,9 +159,9 @@ export default function Workspace() {
         </header>
 
         <section className="intro workspace-intro" id="top">
-          <span className="section-index">00 / TRADE WORKSPACE · DEVNET TEST ASSETS</span>
-          <h1>TRADE. <em>CHECK THE REFERENCE.</em></h1>
-          <p>Both assets are devnet test tokens; AAPLX-test is not a backed security.</p>
+          <span className="section-index">00 / SERV REVIEW WORKSPACE · DEVNET TEST ASSETS</span>
+          <h1>ASK. <em>UNDERSTAND THE TRADE.</em></h1>
+          <p>A SERV-powered evidence review before a wallet-signed devnet swap. Both assets are test tokens; AAPLX-test is not a backed security.</p>
         </section>
 
         <nav className="scenario-tabs" aria-label="Demo scenarios">
@@ -181,12 +182,13 @@ export default function Workspace() {
           </div>
         </nav>
 
+        <ServReview scenario={activeView === "live" ? null : activeView} amount={amount} onAmountChange={setAmount} />
+
         <div className="main-grid main-grid-trading">
-          {/* Trade panel leads the DOM and the mobile order: it is the primary
-              workspace action, with the policy decision attached to it. */}
+          {/* Transaction construction and deterministic policy stay independent of the advisory review. */}
           <section className="trade-panel numbered-panel">
             <div className="panel-heading">
-              <span>01</span><div><span className="eyebrow">POOL QUOTE · DIRECT SPL TOKEN SWAP V3</span><h2>TRADE</h2></div>
+              <span>02</span><div><span className="eyebrow">OPTIONAL WALLET ACTION · DIRECT SPL TOKEN SWAP V3</span><h2>TRADE DETAILS</h2></div>
             </div>
 
             <PolicyDecision risk={risk} simulated={isSimulated} />
@@ -233,19 +235,13 @@ export default function Workspace() {
               </div>
             ) : null}
 
-            <label className="amount-field">
+            <div className="amount-field">
               <span className="eyebrow">YOU PAY</span>
               <div>
-                <input
-                  value={amount}
-                  onChange={(event) => setAmount(event.target.value)}
-                  inputMode="decimal"
-                  aria-describedby="amount-help"
-                  aria-label="Amount of USDC-test to pay"
-                />
+                <strong>{amountNumber.toLocaleString()}</strong>
                 <strong>USDC-test</strong>
               </div>
-            </label>
+            </div>
             <div className="swap-arrow" aria-hidden="true">↓</div>
             <div className="receive-field">
               <span className="eyebrow">
@@ -290,7 +286,7 @@ export default function Workspace() {
 
             <section className="reference-panel numbered-panel">
               <div className="panel-heading">
-                <span>02</span><div><span className="eyebrow">REFERENCE LAYER</span><h2>PRICE ENVELOPE</h2></div>
+                <span>03</span><div><span className="eyebrow">REFERENCE LAYER</span><h2>PRICE ENVELOPE</h2></div>
               </div>
               <div className="blueprint-plot" aria-label="Relative price positions normalized for display">
                 <span className="plot-scale-note">RELATIVE SCALE / USD</span>
@@ -347,7 +343,7 @@ export default function Workspace() {
         </section>
 
         <footer>
-          <span>AFTERHOURS / STOCKLANA 2026</span>
+          <span>AFTERHOURS / SERV REASONING</span>
           <span>UNCERTAINTY, MADE VISIBLE.</span>
         </footer>
       </div>

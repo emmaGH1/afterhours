@@ -4,8 +4,8 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Providers } from "./providers";
 
-const title = "AfterHours — Stock-token swap prototype";
-const description = "Explore simulated reference-aware limits and direct Solana devnet test-token swaps with live pool quotes.";
+const title = "AfterHours — SERV-powered pre-trade review";
+const description = "Review Solana devnet test-token requests with SERV Reasoning, labelled simulated references, and reserve-based pool quotes.";
 const siteOrigin = process.env.NEXT_PUBLIC_SITE_URL ?? (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
 
 export const metadata: Metadata = {
