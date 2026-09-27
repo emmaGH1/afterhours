@@ -13,4 +13,6 @@ export interface VerifiedPool {
   poolFeeBps: number;
   reserves: { usdc: number; aaplx: number };
   proof: { signature: string; explorerUrl: string };
+  observationId?: string;
+  observedAt?: string;
 }

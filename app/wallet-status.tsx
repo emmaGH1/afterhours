@@ -90,8 +90,8 @@ export function WalletStatus({ pool }: { pool: VerifiedPool | null }) {
         <span className="eyebrow">CONNECTED WALLET</span>
         <strong className="wallet-status-title">WALLET DISCONNECTED</strong>
         <p className="wallet-status-note">
-          This demo requires a Wallet Standard wallet such as Solflare, set to the Solana Devnet
-          network. The workspace uses devnet addresses only.
+          Optional balance inspection uses a Wallet Standard wallet such as Solflare, set to the Solana Devnet
+          network. SERV reviews require no wallet. This desk uses devnet addresses only.
         </p>
       </section>
     );

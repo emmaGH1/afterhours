@@ -110,10 +110,24 @@ export function quoteOutput(amountUsd: number, snapshot: MarketSnapshot, decisio
   const reserves = snapshot.poolReserves;
   const feeBps = snapshot.poolFeeBps;
   if (decision.state === "paused" || !Number.isFinite(amountUsd) || amountUsd <= 0 || amountUsd > decision.maxInputUsd
-    || !reserves || reserves.usdc <= 0 || reserves.aaplx <= 0
-    || feeBps == null || feeBps < 0 || feeBps >= 10_000) return null;
-  const netInput = amountUsd * (1 - feeBps / 10_000);
-  return (reserves.aaplx * netInput) / (reserves.usdc + netInput);
+    || !reserves) return null;
+  return quoteFromReserves(amountUsd, reserves, feeBps);
+}
+
+// Indicative reserve arithmetic for comparing requested and reduced options.
+// Policy eligibility remains the caller's separate deterministic decision.
+export function quoteFromReserves(
+  amountUsdc: number,
+  reserves: PoolReserves | null | undefined,
+  feeBps: number | null | undefined,
+): number | null {
+  if (!Number.isFinite(amountUsdc) || amountUsdc <= 0 || !reserves
+    || !Number.isFinite(reserves.usdc) || reserves.usdc <= 0
+    || !Number.isFinite(reserves.aaplx) || reserves.aaplx <= 0
+    || feeBps == null || !Number.isFinite(feeBps) || feeBps < 0 || feeBps >= 10_000) return null;
+  const netInput = amountUsdc * (1 - feeBps / 10_000);
+  const output = (reserves.aaplx * netInput) / (reserves.usdc + netInput);
+  return Number.isFinite(output) && output > 0 ? output : null;
 }
 
 export function formatAge(seconds: number) {

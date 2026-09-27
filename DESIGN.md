@@ -1,3 +1,12 @@
+# AfterHours SERV edition — current design direction
+
+This section supersedes the historical reference extraction below for product flow. User approved a full landing/workspace revamp on September 27, 2026. Read .hackathon/SERV_BUILD_BRIEF.md and lib/review-contract.ts.
+
+Design a decision desk, not a trading dashboard with an AI card attached. Primary hierarchy: user's intent and amount; dated evidence; three feasible/infeasible alternatives; SERV's selected plan and explanation; application validation; optional wallet action. Show actual tool/completion provenance without pretending to expose internal reasoning. Landing mechanism must place SERV comparison visibly between evidence gathering and validated plan. Lead proof with the new review workflow; old script settlement is supplementary.
+
+Retain the original AfterHours mark, warm paper, charcoal, vermilion action, square geometry, hairlines, open fonts and restrained motion. Reorganize layouts and copy substantially. Color change is not a priority. Use readable body copy and short mono metadata; prioritize clarity over implementation jargon. Errors, unavailable evidence, waiting, expiry and loading are designed states. Respect reduced motion and keyboard access. Mobile should remain a complete decision flow. No proprietary Heron assets/fonts/copy.
+
+The following is historical visual research, not product copy or permission to reuse proprietary assets.
 ---
 name: "Heron AI"
 description: "An AI agent that works inside your design tools (Revit, Rhino, ArchiCAD, SketchUp) to spot code and constructability problems and execute edits directly in BIM/CAD models."

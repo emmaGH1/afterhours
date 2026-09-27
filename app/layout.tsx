@@ -4,9 +4,9 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Providers } from "./providers";
 
-const title = "AfterHours — SERV-powered pre-trade review";
-const description = "Review Solana devnet test-token requests with SERV Reasoning, labelled simulated references, and reserve-based pool quotes.";
-const siteOrigin = process.env.NEXT_PUBLIC_SITE_URL ?? (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+const title = "AfterHours — A decision desk powered by SERV";
+const description = "Give SERV your intent. Compare a devnet test-token request, a smaller permitted trade, and waiting against dated evidence and interface limits.";
+const siteOrigin = process.env.NEXT_PUBLIC_SITE_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteOrigin),
