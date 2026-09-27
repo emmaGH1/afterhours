@@ -8,8 +8,8 @@
 .heroText h1{font-size:clamp(48px,5.9vw,92px);letter-spacing:-.04em;line-height:1.03;font-weight:500;margin:0 0 30px}
 .heroText h1 em{font-style:normal;color:var(--brand)}
 .heroText>p{font-size:18px;line-height:1.65;max-width:43ch;margin:0 0 34px}
-.primary{background:var(--brand);color:var(--paper-light);display:inline-flex;gap:42px;align-items:center;padding:20px 24px;text-decoration:none;font-size:14px;font-weight:600}
-.primary:hover{background:var(--brand-hover)}
+.primary{background:#d92c00;color:var(--paper-light);display:inline-flex;gap:42px;align-items:center;padding:20px 24px;text-decoration:none;font-size:14px;font-weight:600}
+.primary:hover{background:#bd2700;text-decoration:underline;text-underline-offset:4px}
 .disclosure{display:block;font-size:11px;font-family:var(--mono);margin-top:22px;color:var(--muted)}
 
 .sheet{border:1px solid var(--ink);margin:0;background:var(--paper-light)}
@@ -97,3 +97,9 @@
 
 @media(prefers-reduced-motion:reduce){.frame *{transition:none;scroll-behavior:auto}
 }
+
+.problem{display:grid;grid-template-columns:1.05fr 1fr;gap:70px;padding:48px 5%;border-top:1px solid var(--ink)}
+.problem h2{font-size:clamp(30px,3vw,46px);line-height:1.12;font-weight:500;letter-spacing:-.03em;margin:0}
+.problem p{font-size:16px;line-height:1.7;margin:0;max-width:58ch}
+.problem p+p{margin-top:18px;color:var(--muted)}
+@media(max-width:650px){.problem{grid-template-columns:1fr;gap:24px;padding:36px 22px}}

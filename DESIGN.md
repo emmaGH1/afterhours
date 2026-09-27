@@ -6,6 +6,8 @@ Design a decision desk, not a trading dashboard with an AI card attached. Primar
 
 Retain the original AfterHours mark, warm paper, charcoal, vermilion action, square geometry, hairlines, open fonts and restrained motion. Reorganize layouts and copy substantially. Color change is not a priority. Use readable body copy and short mono metadata; prioritize clarity over implementation jargon. Errors, unavailable evidence, waiting, expiry and loading are designed states. Respect reduced motion and keyboard access. Mobile should remain a complete decision flow. No proprietary Heron assets/fonts/copy.
 
+Refinement September 27: white small-text primary actions use darker vermilion #d92c00 (4.87:1 against white), with #bd2700 hover. Large vermilion accents keep the existing brand color. Make scenario illustrations distinct from actual review evidence, show structural checks beside the plan, and finish the desk with explicit next steps and a readable boundary ledger.
+
 The following is historical visual research, not product copy or permission to reuse proprietary assets.
 ---
 name: "Heron AI"

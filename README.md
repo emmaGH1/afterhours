@@ -1,6 +1,6 @@
 # AfterHours
 
-A decision desk powered by SERV Reasoning. Give AfterHours a proposed devnet test-token trade and your intent; it gathers dated evidence, compares the requested amount, a permitted smaller trade, and waiting, then presents an advisory plan checked against deterministic constraints.
+A trade limit tells you what is allowed. It does not tell you whether a smaller amount suits your intention or you would prefer to wait. AfterHours is a decision desk powered by SERV Reasoning: describe your priorities in your own words, compare three alternatives using dated evidence, and inspect an advisory plan checked against deterministic constraints. This prototype uses devnet test tokens and simulated reference scenarios.
 
 **Current status:** [the public Review Desk](https://afterhours-one-rho.vercel.app/workspace) is verified. The six-case real SERV evaluation passed, including different choices for two intents under the same guarded reserve values; that wait/reduced pair also passed in the public browser. Typecheck, 61 tests, and production build passed. This desk does not submit transactions.
 
